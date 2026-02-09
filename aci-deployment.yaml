@@ -1,0 +1,57 @@
+apiVersion: '2021-10-01'
+location: eastus
+name: ecom-app-group
+properties:
+  containers:
+  - name: db
+    properties:
+      image: mysql:8.0
+      environmentVariables:
+      - name: MYSQL_ROOT_PASSWORD
+        value: Bksra99@
+      - name: MYSQL_DATABASE
+        value: ecom_db
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+      ports:
+      - port: 3306
+  - name: backend
+    properties:
+      image: abhi0565/order-backend:v1
+      environmentVariables:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://localhost:3306/ecom_db?createDatabaseIfNotExist=true
+      - name: SPRING_DATASOURCE_USERNAME
+        value: root
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: Bksra99@
+      - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+      ports:
+      - port: 8080
+  - name: frontend
+    properties:
+      image: abhi0565/ecom-frontend:v1
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+      ports:
+      - port: 80
+  osType: Linux
+  ipAddress:
+    type: Public
+    ports:
+    - protocol: tcp
+      port: 80
+    - protocol: tcp
+      port: 8080
+  # Registry credentials omitted for public Docker Hub images
+tags: {}
+type: Microsoft.ContainerInstance/containerGroups
