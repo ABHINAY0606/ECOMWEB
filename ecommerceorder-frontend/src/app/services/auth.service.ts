@@ -5,7 +5,7 @@ import { User } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://ecom-app-mm743.eastus.azurecontainer.io:8080/api/auth';
+  private apiUrl = '/api/auth';
 
   constructor(private http: HttpClient) { }
 
