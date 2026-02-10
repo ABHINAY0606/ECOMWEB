@@ -1,4 +1,4 @@
-name: Build and Deploy to ACI
+name: Build and Deploy to Azure App Service
 
 on:
   push:
@@ -44,37 +44,35 @@ jobs:
           cd ecommerceorder-frontend
           npm run build --configuration=production
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+      - name: Log in to Azure Container Registry
+        uses: azure/docker-login@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build and Push Backend Image
         uses: docker/build-push-action@v5
         with:
           context: ./Order-Management
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/order-backend:latest,${{ secrets.DOCKERHUB_USERNAME }}/order-backend:${{ github.sha }}
+          tags: ${{ secrets.ACR_LOGIN_SERVER }}/order-backend:latest,${{ secrets.ACR_LOGIN_SERVER }}/order-backend:${{ github.sha }}
 
       - name: Build and Push Frontend Image
         uses: docker/build-push-action@v5
         with:
           context: ./ecommerceorder-frontend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ecom-frontend:latest,${{ secrets.DOCKERHUB_USERNAME }}/ecom-frontend:${{ github.sha }}
+          tags: ${{ secrets.ACR_LOGIN_SERVER }}/ecom-frontend:latest,${{ secrets.ACR_LOGIN_SERVER }}/ecom-frontend:${{ github.sha }}
 
       - name: Azure Login
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy to Azure Container Instances
-        uses: azure/aci-deploy@v1
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v3
         with:
-          resource-group: EcommerceRG
-          dns-name-label: ecom-app-mm743
-          image: ${{ secrets.DOCKERHUB_USERNAME }}/ecom-frontend:latest
-          name: ecom-app-group
-          location: eastus
-          config-file: aci-deployment.yaml
+          app-name: ecom-frontend-app
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          configuration-file: azure-compose.yml

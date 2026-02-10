@@ -13,7 +13,7 @@ services:
       - ecom-network
 
   backend:
-    image: ecomregistry743.azurecr.io/order-backend:v1
+    image: ecomregistry743.azurecr.io/order-backend:latest
     container_name: order-backend
     depends_on:
       - db
@@ -29,7 +29,7 @@ services:
       - ecom-network
 
   frontend:
-    image: ecomregistry743.azurecr.io/ecom-frontend:v1
+    image: ecomregistry743.azurecr.io/ecom-frontend:latest
     container_name: order-frontend
     ports:
       - "80:80"
