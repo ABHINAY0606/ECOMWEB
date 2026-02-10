@@ -1,0 +1,259 @@
+/* Global */
+.dashboard-container {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f7f6;
+  min-height: 100vh;
+  color: #333;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #2c3e50;
+  color: white;
+  align-items: center;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* Tabs */
+.tabs {
+  background: white;
+  padding: 0 2rem;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.tabs button {
+  padding: 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #666;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+}
+
+.tabs button:hover,
+.tabs button.active {
+  color: #2c3e50;
+  border-bottom-color: #2c3e50;
+  font-weight: bold;
+}
+
+/* Content & Forms */
+.section {
+  padding: 0 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.welcome-section {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.add-form {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-row input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 150px;
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.data-table th,
+.data-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.data-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.data-table tr:hover {
+  background: #f1f1f1;
+}
+
+/* Images & Text Truncation (Fixes Scrolling) */
+.product-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.url-text {
+  display: inline-block;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+/* Buttons */
+button {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.add-btn {
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+}
+
+.save-btn {
+  background: #28a745;
+  color: white;
+}
+
+.edit-btn {
+  background: #ffc107;
+  color: #333;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+}
+
+.logout-btn {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  color: white;
+}
+
+/* Status Badges */
+.status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status.PLACED {
+  background: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #90caf9;
+}
+
+.status.SHIPPED {
+  background: #fff3e0;
+  color: #e65100;
+  border: 1px solid #ffcc80;
+}
+
+.status.DELIVERED {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.status.PENDING {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.status.COMPLETED {
+  background: #f3e5f5;
+  color: #6a1b9a;
+  border: 1px solid #ce93d8;
+}
+
+/* Order Actions */
+.status-actions {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+
+.status-actions button {
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+.status-actions button:first-of-type {
+  background-color: #17a2b8;
+}
+
+/* Ship: Cyan */
+.status-actions button:last-of-type {
+  background-color: #6f42c1;
+}
+
+/* Deliver: Purple */
+.status-actions button:last-child {
+  background-color: #28a745;
+}
+
+/* Paid: Green */

@@ -1,0 +1,18 @@
+<div class="login-page">
+  <h1 class="app-title">E-commerce System</h1>
+
+  <div class="login-container">
+    <h2>Login</h2>
+    <form (ngSubmit)="login()">
+      <label>Username:</label>
+      <input type="text" [(ngModel)]="username" name="username" required />
+
+      <label>Password:</label>
+      <input type="password" [(ngModel)]="password" name="password" required />
+
+      <button type="submit">Login</button>
+      <button type="button" (click)="goToRegister()" style="margin-top: 10px; background-color: #28a745;">Register
+        Now</button>
+    </form>
+  </div>
+</div>

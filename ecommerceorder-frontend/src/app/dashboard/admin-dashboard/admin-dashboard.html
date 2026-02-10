@@ -1,0 +1,137 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Admin Dashboard</h1>
+    <button (click)="logout()" class="logout-btn">Logout</button>
+  </div>
+
+  <div class="tabs">
+    <button [class.active]="activeSection === 'products'" (click)="showSection('products')">Manage Products</button>
+    <button [class.active]="activeSection === 'orders'" (click)="showSection('orders')">All Orders</button>
+  </div>
+
+  <!-- Welcome Section -->
+  <div *ngIf="activeSection === 'welcome'" class="section welcome-section">
+    <h2>Welcome, Admin! 🕶️🎉⭐</h2>
+    <p class="instruction">Select <strong>"Manage Products"</strong> to add, edit, or remove products.</p>
+    <p class="instruction">Select <strong>"All Orders"</strong> to view and update customer orders.</p>
+  </div>
+
+  <!-- Manage Products Section -->
+  <div *ngIf="activeSection === 'products'" class="section">
+    <div class="header-actions">
+      <h3>Product List</h3>
+      <button (click)="toggleAdd()" class="add-btn">{{ adding ? 'Cancel Adding' : 'Add Product' }}</button>
+    </div>
+
+    <div *ngIf="adding" class="add-form">
+      <h4>New Product</h4>
+      <div class="form-row">
+        <input [(ngModel)]="newProduct.name" placeholder="Name" />
+        <input type="number" [(ngModel)]="newProduct.price" placeholder="Price" />
+        <input type="number" [(ngModel)]="newProduct.stock_quantity" placeholder="Stock" />
+        <input [(ngModel)]="newProduct.description" placeholder="Description" />
+        <input [(ngModel)]="newProduct.imageUrl" placeholder="Image URL (http://...)" />
+      </div>
+      <button (click)="saveNewProduct()" class="save-btn">Save New Product</button>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Description</th>
+          <th>Image URL</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>
+            <img *ngIf="product.imageUrl" [src]="product.imageUrl" class="product-thumb" alt="Product">
+          </td>
+          <td>{{ product.product_id }}</td>
+          <td>
+            <span *ngIf="editingProductId !== product.product_id">{{ product.name }}</span>
+            <input *ngIf="editingProductId === product.product_id" [(ngModel)]="editedProduct.name" />
+          </td>
+          <td>
+            <span *ngIf="editingProductId !== product.product_id">{{ product.price | currency:'INR' }}</span>
+            <input *ngIf="editingProductId === product.product_id" type="number" [(ngModel)]="editedProduct.price" />
+          </td>
+          <td>
+            <span *ngIf="editingProductId !== product.product_id">{{ product.stock_quantity }}</span>
+            <input *ngIf="editingProductId === product.product_id" type="number"
+              [(ngModel)]="editedProduct.stock_quantity" />
+          </td>
+          <td>
+            <span *ngIf="editingProductId !== product.product_id">{{ product.description }}</span>
+            <input *ngIf="editingProductId === product.product_id" [(ngModel)]="editedProduct.description" />
+          </td>
+          <td>
+            <span *ngIf="editingProductId !== product.product_id" class="url-text" title="{{product.imageUrl}}">{{
+              product.imageUrl || 'None' }}</span>
+            <input *ngIf="editingProductId === product.product_id" [(ngModel)]="editedProduct.imageUrl"
+              placeholder="Image URL" />
+          </td>
+          <td class="actions">
+            <button *ngIf="editingProductId !== product.product_id" (click)="startEdit(product)"
+              class="edit-btn">Edit</button>
+            <button *ngIf="editingProductId === product.product_id" (click)="saveEdit()" [disabled]="saving"
+              class="save-btn">{{ saving ? 'Saving...' : 'Save' }}</button>
+            <button *ngIf="editingProductId === product.product_id" (click)="cancelEdit()"
+              class="cancel-btn">Cancel</button>
+            <button (click)="deleteProduct(product.product_id)" class="delete-btn">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- All Orders Section -->
+  <div *ngIf="activeSection === 'orders'" class="section">
+    <h3>All Orders</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>User</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Payment</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of allOrders">
+          <td>{{ order.order_id }}</td>
+          <td>{{ order.user.username }}</td>
+          <td>{{ order.order_date | date:'short' }}</td>
+          <td>{{ order.total_amount | currency:'INR' }}</td>
+          <td>
+            <span [class]="'status ' + order.status">{{ order.status }}</span>
+          </td>
+          <td>
+            <span [class]="'status ' + order.payment_status">{{ order.payment_status }}</span>
+          </td>
+          <td class="actions">
+            <div class="status-actions">
+              <label>Delivery:</label>
+              <button (click)="updateOrderStatus(order, 'SHIPPED')" *ngIf="order.status === 'PLACED'">Ship</button>
+              <button (click)="updateOrderStatus(order, 'DELIVERED')"
+                *ngIf="order.status === 'SHIPPED'">Deliver</button>
+
+              <label>Payment:</label>
+              <button (click)="updatePaymentStatus(order, 'COMPLETED')" *ngIf="order.payment_status === 'PENDING'">Mark
+                Paid</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

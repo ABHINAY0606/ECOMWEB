@@ -1,0 +1,29 @@
+<div class="orders-container">
+    <h2>All Orders</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Payment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of allOrders">
+                <td>{{ order.order_id }}</td>
+                <td>{{ order.user.username }}</td>
+                <td>{{ order.order_date | date:'short' }}</td>
+                <td>{{ order.total_amount | currency:'INR' }}</td>
+                <td>
+                    <span [class]="'status ' + order.status">{{ order.status }}</span>
+                </td>
+                <td>
+                    <span [class]="'status ' + order.payment_status">{{ order.payment_status }}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,6 @@
+# Optimization: Add .dockerignore
+To speed up Docker builds, we exclude:
+- node_modules
+- .git
+- .angular
+- dist
