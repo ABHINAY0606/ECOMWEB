@@ -2,10 +2,14 @@ apiVersion: '2021-10-01'
 location: eastus
 name: ecom-app-group
 properties:
+  imageRegistryCredentials:
+  - server: index.docker.io
+    username: abhi0565
+    password: DOCKER_PASSWORD_PLACEHOLDER # Update this or use GitHub Secrets for automation
   containers:
   - name: db
     properties:
-      image: mysql:8.0
+      image: docker.io/mysql:8.0
       environmentVariables:
       - name: MYSQL_ROOT_PASSWORD
         value: Bksra99@
@@ -13,13 +17,13 @@ properties:
         value: ecom_db
       resources:
         requests:
-          cpu: 1.0
-          memoryInGB: 1.5
+          cpu: 0.5
+          memoryInGB: 1.0
       ports:
       - port: 3306
   - name: backend
     properties:
-      image: abhi0565/order-backend:v1
+      image: docker.io/abhi0565/order-backend:v1
       environmentVariables:
       - name: SPRING_DATASOURCE_URL
         value: jdbc:mysql://localhost:3306/ecom_db?createDatabaseIfNotExist=true
@@ -31,17 +35,17 @@ properties:
         value: update
       resources:
         requests:
-          cpu: 1.0
-          memoryInGB: 1.5
+          cpu: 0.5
+          memoryInGB: 1.0
       ports:
       - port: 8080
   - name: frontend
     properties:
-      image: abhi0565/ecom-frontend:v1
+      image: docker.io/abhi0565/ecom-frontend:v1
       resources:
         requests:
-          cpu: 1.0
-          memoryInGB: 1.5
+          cpu: 0.5
+          memoryInGB: 1.0
       ports:
       - port: 80
   osType: Linux
@@ -52,6 +56,7 @@ properties:
       port: 80
     - protocol: tcp
       port: 8080
+    dnsNameLabel: ecom-app-mm743
   # Registry credentials omitted for public Docker Hub images
 tags: {}
 type: Microsoft.ContainerInstance/containerGroups
