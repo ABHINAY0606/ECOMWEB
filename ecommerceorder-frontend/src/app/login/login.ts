@@ -32,7 +32,14 @@ export class Login {
         }
       },
       error: (err) => {
-        alert('Invalid credentials');
+        console.error('Login failed:', err);
+        if (err.status === 0) {
+          alert('Network error. Please check your connection or backend status.');
+        } else if (err.status === 401) {
+          alert('Invalid username or password');
+        } else {
+          alert(`Login failed: ${err.message || 'Unknown error'}`);
+        }
       }
     });
   }
